@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309022947) do
+ActiveRecord::Schema.define(version: 20180309023832) do
 
-  create_table "alchemy_attachments", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "alchemy_attachments", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "file_name"
     t.string "file_mime_type"
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["file_uid"], name: "index_alchemy_attachments_on_file_uid"
   end
 
-  create_table "alchemy_cells", force: :cascade do |t|
+  create_table "alchemy_cells", id: :serial, force: :cascade do |t|
     t.integer "page_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["page_id"], name: "index_alchemy_cells_on_page_id"
   end
 
-  create_table "alchemy_contents", force: :cascade do |t|
+  create_table "alchemy_contents", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "essence_type", null: false
     t.integer "essence_id", null: false
@@ -48,7 +51,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["essence_id", "essence_type"], name: "index_alchemy_contents_on_essence_id_and_essence_type", unique: true
   end
 
-  create_table "alchemy_elements", force: :cascade do |t|
+  create_table "alchemy_elements", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.integer "page_id", null: false
@@ -72,7 +75,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.integer "page_id"
   end
 
-  create_table "alchemy_essence_booleans", force: :cascade do |t|
+  create_table "alchemy_essence_booleans", id: :serial, force: :cascade do |t|
     t.boolean "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -81,7 +84,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["value"], name: "index_alchemy_essence_booleans_on_value"
   end
 
-  create_table "alchemy_essence_dates", force: :cascade do |t|
+  create_table "alchemy_essence_dates", id: :serial, force: :cascade do |t|
     t.datetime "date"
     t.integer "creator_id"
     t.integer "updater_id"
@@ -89,7 +92,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "alchemy_essence_files", force: :cascade do |t|
+  create_table "alchemy_essence_files", id: :serial, force: :cascade do |t|
     t.integer "attachment_id"
     t.string "title"
     t.string "css_class"
@@ -101,7 +104,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["attachment_id"], name: "index_alchemy_essence_files_on_attachment_id"
   end
 
-  create_table "alchemy_essence_htmls", force: :cascade do |t|
+  create_table "alchemy_essence_htmls", id: :serial, force: :cascade do |t|
     t.text "source"
     t.integer "creator_id"
     t.integer "updater_id"
@@ -109,7 +112,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "alchemy_essence_links", force: :cascade do |t|
+  create_table "alchemy_essence_links", id: :serial, force: :cascade do |t|
     t.string "link"
     t.string "link_title"
     t.string "link_target"
@@ -120,7 +123,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.integer "updater_id"
   end
 
-  create_table "alchemy_essence_pictures", force: :cascade do |t|
+  create_table "alchemy_essence_pictures", id: :serial, force: :cascade do |t|
     t.integer "picture_id"
     t.string "caption"
     t.string "title"
@@ -140,7 +143,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["picture_id"], name: "index_alchemy_essence_pictures_on_picture_id"
   end
 
-  create_table "alchemy_essence_richtexts", force: :cascade do |t|
+  create_table "alchemy_essence_richtexts", id: :serial, force: :cascade do |t|
     t.text "body"
     t.text "stripped_body"
     t.boolean "public"
@@ -150,7 +153,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "alchemy_essence_selects", force: :cascade do |t|
+  create_table "alchemy_essence_selects", id: :serial, force: :cascade do |t|
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -159,7 +162,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["value"], name: "index_alchemy_essence_selects_on_value"
   end
 
-  create_table "alchemy_essence_texts", force: :cascade do |t|
+  create_table "alchemy_essence_texts", id: :serial, force: :cascade do |t|
     t.text "body"
     t.string "link"
     t.string "link_title"
@@ -172,14 +175,14 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "alchemy_folded_pages", force: :cascade do |t|
+  create_table "alchemy_folded_pages", id: :serial, force: :cascade do |t|
     t.integer "page_id", null: false
     t.integer "user_id", null: false
     t.boolean "folded", default: false
     t.index ["page_id", "user_id"], name: "index_alchemy_folded_pages_on_page_id_and_user_id", unique: true
   end
 
-  create_table "alchemy_languages", force: :cascade do |t|
+  create_table "alchemy_languages", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "language_code"
     t.string "frontpage_name"
@@ -198,7 +201,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["site_id"], name: "index_alchemy_languages_on_site_id"
   end
 
-  create_table "alchemy_legacy_page_urls", force: :cascade do |t|
+  create_table "alchemy_legacy_page_urls", id: :serial, force: :cascade do |t|
     t.string "urlname", null: false
     t.integer "page_id", null: false
     t.datetime "created_at", null: false
@@ -207,7 +210,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["urlname"], name: "index_alchemy_legacy_page_urls_on_urlname"
   end
 
-  create_table "alchemy_pages", force: :cascade do |t|
+  create_table "alchemy_pages", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "urlname"
     t.string "title"
@@ -245,7 +248,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["urlname"], name: "index_pages_on_urlname"
   end
 
-  create_table "alchemy_pictures", force: :cascade do |t|
+  create_table "alchemy_pictures", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "image_file_name"
     t.integer "image_file_width"
@@ -261,7 +264,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.string "image_file_format"
   end
 
-  create_table "alchemy_sites", force: :cascade do |t|
+  create_table "alchemy_sites", id: :serial, force: :cascade do |t|
     t.string "host"
     t.string "name"
     t.datetime "created_at", null: false
@@ -273,7 +276,7 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["host"], name: "index_alchemy_sites_on_host"
   end
 
-  create_table "alchemy_users", force: :cascade do |t|
+  create_table "alchemy_users", id: :serial, force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
     t.string "login"
@@ -305,4 +308,33 @@ ActiveRecord::Schema.define(version: 20180309022947) do
     t.index ["reset_password_token"], name: "index_alchemy_users_on_reset_password_token", unique: true
   end
 
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  add_foreign_key "alchemy_cells", "alchemy_pages", column: "page_id", name: "alchemy_cells_page_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "alchemy_contents", "alchemy_elements", column: "element_id", name: "alchemy_contents_element_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "alchemy_elements", "alchemy_cells", column: "cell_id", name: "alchemy_elements_cell_id_fkey", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "alchemy_elements", "alchemy_pages", column: "page_id", name: "alchemy_elements_page_id_fkey", on_update: :cascade, on_delete: :cascade
 end
